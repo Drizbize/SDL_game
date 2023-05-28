@@ -404,13 +404,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio
 
-resources
 !extern/
-!extern/ultralight
-!extern/ultralight/bin
-!extern/ultralight/bin/*
-!extern/ultralight/resources/
-!extern/ultralight/resources/*
 !ui/debug
 !ui/debug/*
 
