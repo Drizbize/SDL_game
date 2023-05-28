@@ -77,7 +77,7 @@ void Window::run()
 				break;
 			}
 			case SDL_KEYUP:
-				std::cout << "Jump !";
+				std::cout << "Jump 2!";
 				break;
 
 			case SDL_TEXTINPUT:
