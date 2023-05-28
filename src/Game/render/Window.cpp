@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "SDL.h"
 #include "glad/glad.h"
+#include <iostream>
 
 namespace game
 {
@@ -76,6 +77,7 @@ void Window::run()
 				break;
 			}
 			case SDL_KEYUP:
+				std::cout << "Jump !";
 				break;
 
 			case SDL_TEXTINPUT:
