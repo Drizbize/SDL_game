@@ -407,6 +407,7 @@ FodyWeavers.xsd
 !extern/
 !ui/debug
 !ui/debug/*
+!extern/sdl/bin
 
 # cmake
 *.vcxproj

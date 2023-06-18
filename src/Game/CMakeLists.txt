@@ -28,6 +28,7 @@ target_include_directories(Game PUBLIC "${GAME_SOURCE_DIR}")
 target_include_directories(Game PUBLIC "${UPLAY_INCLUDE_DIR}")
 target_include_directories(Game PUBLIC "${CMAKE_BINARY_DIR}/_cmrc/include") # Bundle resources
 target_include_directories(Game PUBLIC "${MESSAGES_DIR}/build")
+target_include_directories(Game PUBLIC "${PROJECT_SOURCE_DIR}/src")
 
 # Options
 target_compile_options(Game PRIVATE "$<$<CONFIG:Debug>:/WX>") # Warning as error on debug (MSVC)
