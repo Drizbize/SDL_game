@@ -21,7 +21,11 @@ namespace game
 	{
 		Red = 1,
 		Green,
-		Blue
+		Blue,
+		White,
+		Yellow,
+		Pink,
+		Cyan
 	};
 
 	class OpenGl
@@ -30,11 +34,13 @@ namespace game
 		OpenGl(int width, int height);
 		~OpenGl() = default;
 
+		//bool Init();
 		bool initPlayerOpengl(const std::string& name);
 		bool updatePlayerVetrtices(const std::string& name, float posX, float posY, float width, float height);
 		bool drawShader(const std::string& name);
 		bool setColor(const std::string& name, MYColors colors);
 
+		//GLuint vertexVBO;
 	private:
 		std::map<std::string, GlState> m_states;
 
