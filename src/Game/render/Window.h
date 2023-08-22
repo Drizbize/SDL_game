@@ -1,5 +1,7 @@
 #pragma once
 #include "opengl/OpenGl.h"
+#include "Objects/Object.h"
+
 #include <memory>
 #include <vector>
 
@@ -16,19 +18,24 @@ public:
 	~Window();
 
 	void run();
-private:	
+	void renderObjects(const std::vector<Object>& objects);
+	void swapWindow();
+	void update();
+
+	int getWidth() const { return m_width; }
+	int getHeight() const { return m_height; }
+
+private:
 	struct Impl;
 	std::unique_ptr<Impl> m_impl;
-
 	std::unique_ptr<OpenGl> m_opengl;
 
 	WindowListener* m_listener;
 	int m_id;
-
 	int m_width;
 	int m_height;
 
-	std::vector<Object> m_objects;
+	bool m_running;
 };
 
 }

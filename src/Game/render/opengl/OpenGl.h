@@ -25,7 +25,8 @@ namespace game
 		White,
 		Yellow,
 		Pink,
-		Cyan
+		Cyan,
+		SIZE_OF_ENUM
 	};
 
 	class OpenGl
