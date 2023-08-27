@@ -13,7 +13,7 @@ namespace game
 	struct Object
 	{
 		Vector2 pos;
-		Vector2 size{ 100.f, 100.f };
+		Vector2 size{ 5.f, 5.f };
 
 		std::string name;
 		bool shouldRender = true;

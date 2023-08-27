@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "glad/glad.h"
 #include <iostream>
+#include
 
 namespace game
 {
@@ -27,6 +28,8 @@ void Game::run()
 	while (m_running)
 	{
 		m_window->update();
+
+
 
 		m_window->renderObjects(m_objects);
 		m_window->swapWindow();
