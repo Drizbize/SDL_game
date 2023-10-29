@@ -1,33 +1,38 @@
 #pragma once
+#include <atomic>
+#include <memory>
+
 #include "render/Window.h"
 #include "render/Listeners/WindowListener.h"
-#include <memory>
+
+#include "Objects/Object.h"
 
 namespace game
 {
-	struct Object
-	{
-		float posX;
-		float posY;
-		float width = 100.f;
-		float height = 100.f;
-	};
 
 class Game : public WindowListener
 {
 public:
+	void createInitParticles();
+	void createParticles(std::string name, int amount, game::MYColors color);
+	void randPosition(Object& obj);
+
 	Game();
 	~Game();
 
 	void run();
 
 	// WindowListener implementation
-	void onKeyPressed(int key);
-	void onKeyReleased(int key);
+	void onKeyPressed(int key) override;
+	void onKeyReleased(int key) override;
+	void onExit() override;
 
-	Object player;
 private:
 	std::shared_ptr<Window> m_window;
+
+	std::vector<Object> m_objects;
+
+	std::atomic<bool> m_running;
 };
 
 }

@@ -404,10 +404,9 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio
 
-!extern/
+!extern/	
 !ui/debug
 !ui/debug/*
-!extern/sdl/bin
 
 # cmake
 *.vcxproj

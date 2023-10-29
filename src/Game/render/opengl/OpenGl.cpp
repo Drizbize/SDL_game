@@ -1,33 +1,33 @@
 #include "OpenGl.h"
-
+#include <iostream>
 #include "glad/glad.h"
 #include "Utils/Utils.h"
 
 namespace game
 {
 	const char* vertexShaderSource = R"(
-    #version 330 core
-	layout (location = 0) in vec3 inPosition;
-	layout (location = 1) in vec3 inColor;
-	out vec4 FragColor;
+		#version 330 core
+		layout (location = 0) in vec3 inPosition;
+		layout (location = 1) in vec3 inColor;
+		out vec4 FragColor;
 
-    void main()
-    {
-        gl_Position = vec4(inPosition.x, inPosition.y, inPosition.z, 1.0);
-		FragColor = vec4(inColor.x, inColor.y, inColor.z, 1.0);
-    }
-)";
+		void main()
+		{
+			gl_Position = vec4(inPosition.x, inPosition.y, inPosition.z, 1.0);
+			FragColor = vec4(inColor.x, inColor.y, inColor.z, 1.0);
+		}
+	)";
 
 	const char* fragmentShaderSource = R"(
-    #version 330 core
-	in vec4 FragColor;
-    out vec4 fragColor;
+		#version 330 core
+		in vec4 FragColor;
+		out vec4 fragColor;
 
-    void main()
-    {
-        fragColor = vec4(FragColor.x, FragColor.y, FragColor.z, 1.0);
-    }
-)";
+		void main()
+		{
+			fragColor = vec4(FragColor.x, FragColor.y, FragColor.z, 1.0);
+		}
+	)";
 
 	OpenGl::OpenGl(int width, int height)
 		: m_width(width)
@@ -131,7 +131,23 @@ namespace game
 		case MYColors::Green:
 			m_states[name].g = 1.f;
 			break;
-
+		case MYColors::White:
+			m_states[name].r = 1.f;
+			m_states[name].b = 1.f;
+			m_states[name].g = 1.f;
+			break;
+		case MYColors::Yellow:
+			m_states[name].r = 1.f;
+			m_states[name].g = 1.f;
+			break;
+		case MYColors::Pink:
+			m_states[name].r = 1.f;
+			m_states[name].b = 0.8f;
+			break;
+		case MYColors::Cyan:
+			m_states[name].g = 1.f;
+			m_states[name].b = 1.0f;
+			break;
 		}
 
 		return true;
@@ -143,19 +159,19 @@ namespace game
 			return false;
 
 
-		glGenVertexArrays(1, &m_states[name].VAO);
-		glGenBuffers(1, &m_states[name].VBO);
+		//glGenVertexArrays(1, &m_states[name].VAO);
+		//glGenBuffers(1, &m_states[name].VBO);
 
 		glBindVertexArray(m_states[name].VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, m_states[name].VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_states[name].vertices), m_states[name].vertices, GL_STATIC_DRAW);
 
 		// position attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
+		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+		//glEnableVertexAttribArray(0);
 		// color attribute
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+		//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		//glEnableVertexAttribArray(1);
 
 		glUseProgram(m_states[name].shader);
 		glBindVertexArray(m_states[name].VAO);

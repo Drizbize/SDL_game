@@ -3,14 +3,6 @@
 #include "glad/glad.h"
 #include <iostream>
 
-enum MoveKeys
-{
-	Up = SDL_SCANCODE_W,
-	Down = SDL_SCANCODE_S,
-	Left = SDL_SCANCODE_A,
-	Right = SDL_SCANCODE_D
-};
-
 namespace game
 {
 
@@ -26,35 +18,64 @@ Game::~Game()
 
 void Game::run()
 {
-	player.posX = 400;
-	player.posY = 300;
+	createInitParticles();
 
+	m_running = true;
 	m_window->run();
+
+	//gameloop
+	while (m_running)
+	{
+		m_window->update();
+
+		m_window->renderObjects(m_objects);
+		m_window->swapWindow();
+	}
+
+	m_window.reset();
 }
 void Game::onKeyPressed(int key)
 {
-	std::cout << "[KEY PRESSED] " << key << "\n";
-	switch (key)
-	{
-	case MoveKeys::Up:
-		player.posY--;
-		break;
-	case MoveKeys::Down:
-		player.posY++;
-		break;
-	case MoveKeys::Left:
-		player.posX--;
-		break;
-	case MoveKeys::Right:
-		player.posX++;
-		break;
-	}
+	printf("Key pressed: %d", key);
 }
 
 void Game::onKeyReleased(int key)
 {
-	//int y = 5;
-	//(void)y;
+}
+
+void Game::onExit()
+{
+	m_running = false;
+}
+
+void Game::createInitParticles()
+{
+	createParticles("Red", 325, MYColors::Red);
+	createParticles("Blue", 325, MYColors::Blue);
+	createParticles("Green", 325, MYColors::Green);
+	createParticles("White", 325, MYColors::White);
+	createParticles("Yellow", 325, MYColors::Yellow);
+}
+
+void Game::createParticles(std::string name, int amount, game::MYColors color)
+{
+	Object newObject;
+	newObject.name = name;
+
+	for (int i = 0; i < amount; i++)
+	{
+		Object newObject;
+		newObject.name = name + std::to_string(i);
+		randPosition(newObject);
+
+		m_objects.push_back(newObject);
+	}
+}
+
+void Game::randPosition(Object& obj)
+{
+	obj.pos.x = rand() % (m_window->getWidth() * 2) - m_window->getWidth();
+	obj.pos.y = rand() % (m_window->getHeight() * 2) - m_window->getHeight();
 }
 
 }
