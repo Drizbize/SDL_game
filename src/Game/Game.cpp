@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "glad/glad.h"
 #include <iostream>
+#include "Render/SdlManager.h"
 
 namespace game
 {
@@ -50,22 +51,20 @@ void Game::onExit()
 
 void Game::createInitParticles()
 {
-	createParticles("Red", 325, MYColors::Red);
+	createParticles(2000, MYColors::Red);
+	/*
 	createParticles("Blue", 325, MYColors::Blue);
 	createParticles("Green", 325, MYColors::Green);
 	createParticles("White", 325, MYColors::White);
 	createParticles("Yellow", 325, MYColors::Yellow);
+	*/
 }
 
-void Game::createParticles(std::string name, int amount, game::MYColors color)
+void Game::createParticles(int amount, game::MYColors color)
 {
-	Object newObject;
-	newObject.name = name;
-
 	for (int i = 0; i < amount; i++)
 	{
 		Object newObject;
-		newObject.name = name + std::to_string(i);
 		randPosition(newObject);
 
 		m_objects.push_back(newObject);
@@ -74,8 +73,8 @@ void Game::createParticles(std::string name, int amount, game::MYColors color)
 
 void Game::randPosition(Object& obj)
 {
-	obj.pos.x = rand() % (m_window->getWidth() * 2) - m_window->getWidth();
-	obj.pos.y = rand() % (m_window->getHeight() * 2) - m_window->getHeight();
+	obj.pos.x = rand() / (double(RAND_MAX) / 2) - 1;
+	obj.pos.y = rand() / (double(RAND_MAX) / 2) - 1;
 }
 
 }

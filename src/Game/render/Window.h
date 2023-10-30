@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 
+#include "Render/OpenGL/Renderer.h"
+
 namespace game
 {
 	
@@ -31,6 +33,7 @@ private:
 	std::unique_ptr<OpenGl> m_opengl;
 
 	WindowListener* m_listener;
+	std::unique_ptr<Renderer> m_renderer;
 	int m_id;
 	int m_width;
 	int m_height;

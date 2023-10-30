@@ -14,7 +14,7 @@ class Game : public WindowListener
 {
 public:
 	void createInitParticles();
-	void createParticles(std::string name, int amount, game::MYColors color);
+	void createParticles(int amount, game::MYColors color);
 	void randPosition(Object& obj);
 
 	Game();

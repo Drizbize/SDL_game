@@ -33,6 +33,7 @@ namespace game
 		: m_width(width)
 		, m_height(height)
 	{
+		
 	}
 
 	bool OpenGl::initPlayerOpengl(const std::string& name)

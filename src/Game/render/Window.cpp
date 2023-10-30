@@ -40,6 +40,9 @@ Window::Window(int id, WindowListener* listener)
 
 	SdlManager::setAttributes();
 	SdlManager::loadOpenGl();
+	
+	m_renderer = std::make_unique<Renderer>("Resources\\shaders\\Basic.shader");
+	m_renderer->init();
 }
 
 Window::~Window()
@@ -62,10 +65,11 @@ void Window::renderObjects(const std::vector<Object>& objects)
 	{
 		if (obj.shouldRender)
 		{
-			m_opengl->updatePlayerVetrtices(obj.name, obj.pos.x, obj.pos.y, obj.size.x, obj.size.y);
-			m_opengl->drawShader(obj.name);
+			m_renderer->addObject(obj.pos.x, obj.pos.y);
 		}
 	}
+
+	m_renderer->draw();
 }
 
 void Window::swapWindow()
