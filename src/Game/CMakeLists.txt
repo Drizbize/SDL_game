@@ -5,6 +5,7 @@ file(GLOB_RECURSE GAME_SOURCES_FILES ${GAME_SOURCE_DIR}/*.c* ${GAME_SOURCE_DIR}/
 # Create targets
 add_library(Game STATIC ${GAME_SOURCES_FILES} ${GLAD_SOURCE_DIR}/glad.c)
 add_dependencies(Game Utils)
+add_dependencies(Game imgui)
 
 # Setup tab sources
 foreach(_source IN ITEMS ${GAME_SOURCES_FILES})
@@ -30,6 +31,9 @@ target_include_directories(Game PUBLIC "${CMAKE_BINARY_DIR}/_cmrc/include") # Bu
 target_include_directories(Game PUBLIC "${MESSAGES_DIR}/build")
 target_include_directories(Game PUBLIC "${PROJECT_SOURCE_DIR}/src")
 target_include_directories(Game PUBLIC "${IMGUI_DIR}")
+target_include_directories(Game PUBLIC "${UTILS_SOURCE_DIR}/glm")
+
+target_link_libraries(Game imgui)
 
 # Options
 target_compile_options(Game PRIVATE "$<$<CONFIG:Debug>:/WX>") # Warning as error on debug (MSVC)

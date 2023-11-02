@@ -51,7 +51,7 @@ namespace game
 			SDL_WINDOWPOS_UNDEFINED,
 			width,
 			height,
-			SDL_WINDOW_OPENGL);
+			SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
 	}
 
 	SDL_GLContext SdlManager::createContext(SDL_Window* window)

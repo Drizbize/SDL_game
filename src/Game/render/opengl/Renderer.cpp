@@ -11,19 +11,45 @@ Renderer::Renderer(const std::string& filepath)
 {
 }
 
-void Renderer::init()
+void Renderer::init(float width, float height)
 {
+	m_width = width;
+	m_height = height;
+	m_zoom = 1.f;
+	m_view = { 0.0f, 0.0f, 0.0f };
+
+	resize(width, height);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	m_offset = 0;
 	m_indicesCount = 0;
-	m_capacity = 2000 * 4;
+	const int quads = 30000;
+	m_capacity = quads * 4;
 	m_vertexes.reserve(sizeof(Vertex) * m_capacity);
 
 	m_layout.push<float>(3);
 	m_vb.allocate(m_capacity * sizeof(Vertex));
 	m_va.addBuffer(m_vb, m_layout);
+
+	//m_proj = glm::ortho(0.f, m_width, 0.f, m_height, -1.0f, 1.0f);
+	//m_shader.setUniformMat4("u_MVP", m_proj);
+
+	m_indices.reserve(quads * 6);
+	int step = 0;
+
+	for (unsigned int i = 0; i < quads * 6; i += 6)
+	{
+		m_indices.push_back(step);
+		m_indices.push_back(step + 1);
+		m_indices.push_back(step + 2);
+		m_indices.push_back(step + 2);
+		m_indices.push_back(step + 3);
+		m_indices.push_back(step);
+
+		step += 4;
+	}
 }
 
 void Renderer::addObject(float x, float y)
@@ -39,26 +65,9 @@ void Renderer::draw() const
 	m_shader.bind();
 	m_va.bind();
 
-	m_vb.push(m_vertexes.data());
+	m_vb.push(m_vertexes.data());		   
 
-	std::vector<unsigned int> indices;
-	indices.reserve(m_indicesCount);
-
-	int step = 0;
-
-	for (unsigned int i = 0; i < m_indicesCount; i += 6)
-	{
-		indices.push_back(step);
-		indices.push_back(step + 1);
-		indices.push_back(step + 2);
-		indices.push_back(step + 2);
-		indices.push_back(step + 3);
-		indices.push_back(step);
-
-		step += 4;
-	}		   
-
-	IndexBuffer ib(indices.data(), m_indicesCount);
+	IndexBuffer ib(m_indices.data(), m_indicesCount);
 	ib.bind();
 
 	glDrawElements(GL_TRIANGLES, ib.count(), GL_UNSIGNED_INT, nullptr);
@@ -69,9 +78,35 @@ void Renderer::draw() const
 	m_vertexes.clear();
 }
 
+void Renderer::moveCamera(int x, int y)
+{
+	m_view.x += x;
+	m_view.y -= y;
+
+	glm::mat4 view = glm::translate(glm::mat4(1.f), m_view);
+	m_shader.setUniformMat4("u_MVP", m_proj * view);
+}
+
+void Renderer::resize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+	m_width = width;
+	m_height = height;
+
+	m_proj = glm::ortho(0.f, m_width * m_zoom, 0.f, m_height * m_zoom, -1.0f, 1.0f);
+	glm::mat4 view = glm::translate(glm::mat4(1.f), m_view);
+	m_shader.setUniformMat4("u_MVP", m_proj * view);
+}
+
+void Renderer::zoom(float value)
+{
+	m_zoom = value;
+	resize(m_width, m_height);
+}
+
 std::array<Vertex, 4> Renderer::createQuad(float x, float y)
 {
-	float size = 0.02f;
+	float size = 20.f;
 
 	Vertex v0;
 	v0.position = { x, y, 0.0f };

@@ -1,5 +1,4 @@
 #pragma once
-#include "opengl/OpenGl.h"
 #include "Objects/Object.h"
 
 #include <memory>
@@ -30,7 +29,6 @@ public:
 private:
 	struct Impl;
 	std::unique_ptr<Impl> m_impl;
-	std::unique_ptr<OpenGl> m_opengl;
 
 	WindowListener* m_listener;
 	std::unique_ptr<Renderer> m_renderer;

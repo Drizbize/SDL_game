@@ -14,7 +14,7 @@ class Game : public WindowListener
 {
 public:
 	void createInitParticles();
-	void createParticles(int amount, game::MYColors color);
+	void createParticles(int amount);
 	void randPosition(Object& obj);
 
 	Game();

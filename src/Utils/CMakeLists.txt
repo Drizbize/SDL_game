@@ -21,6 +21,7 @@ set_target_properties(Utils PROPERTIES LINK_FLAGS "${IGNORE_WARNINGS}") # Missin
 # Includes
 target_include_directories(Utils PUBLIC "${SOURCE_DIR}")
 target_include_directories(Utils PUBLIC "${UTILS_SOURCE_DIR}")
+target_include_directories(Utils PUBLIC "${UTILS_SOURCE_DIR}/glm")
 
 # Options
 target_compile_options(Utils PRIVATE "$<$<CONFIG:Debug>:/WX>") # Warning as error on debug (MSVC)

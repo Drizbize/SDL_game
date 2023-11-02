@@ -17,18 +17,6 @@ set(SDL_INCLUDE_DIR ${EXTERN_DIR}/sdl/include)
 set(GLAD_INCLUDE_DIR ${EXTERN_DIR}/glad/include)
 set(GLAD_SOURCE_DIR ${EXTERN_DIR}/glad/src)
 
-# imgui
-set(IMGUI_DIR ${EXTERN_DIR}/imgui)
-set(IMGUI_HEADER ${IMGUI_DIR}/imgui.h)
-set(IMGUI_SOURCE ${IMGUI_DIR}/imgui.cpp)
-
-file(GLOB IMGUI_SOURCE_FILES ${IMGUI_DIR}/*.cpp)
-file(GLOB IMGUI_HEADER_FILES ${IMGUI_DIR}/*.h)
-
-add_library(imgui ${IMGUI_SOURCE_FILES})
-target_include_directories(imgui PRIVATE ${IMGUI_DIR})
-# end of imgui
-
 # Preproc macro
 add_compile_definitions(UNICODE)    # for windows.h (mostly)
 
@@ -43,6 +31,21 @@ set(GAME_RUNTIME ${PROJECT_SOURCE_DIR}/output/${CMAKE_BUILD_TYPE}/bin/)
 file(MAKE_DIRECTORY ${GAME_RUNTIME})
 
 file(INSTALL ${SDL_BIN_DIR} DESTINATION ${GAME_RUNTIME})
+
+# imgui
+set(IMGUI_DIR ${EXTERN_DIR}/imgui)
+set(IMGUI_HEADER ${IMGUI_DIR}/imgui.h)
+set(IMGUI_SOURCE ${IMGUI_DIR}/imgui.cpp)
+
+file(GLOB IMGUI_SOURCE_FILES ${IMGUI_DIR}/*.cpp)
+file(GLOB IMGUI_HEADER_FILES ${IMGUI_DIR}/*.h)
+
+add_library(imgui STATIC ${IMGUI_SOURCE_FILES} ${IMGUI_HEADER_FILES})
+set_target_properties(imgui PROPERTIES FOLDER "imgui")
+set_target_properties(imgui PROPERTIES OUTPUT_NAME "imgui")
+target_include_directories(imgui PRIVATE ${IMGUI_DIR})
+target_include_directories(imgui PRIVATE "${SDL_INCLUDE_DIR}")
+# end of imgui
 
 # Subs
 add_subdirectory(src)

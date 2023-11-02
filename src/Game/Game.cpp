@@ -37,7 +37,11 @@ void Game::run()
 }
 void Game::onKeyPressed(int key)
 {
-	printf("Key pressed: %d", key);
+	printf("Key pressed: %d\n", key);
+	if (key == 44)
+	{
+		createParticles(1);
+	}
 }
 
 void Game::onKeyReleased(int key)
@@ -51,7 +55,7 @@ void Game::onExit()
 
 void Game::createInitParticles()
 {
-	createParticles(2000, MYColors::Red);
+	createParticles(15);
 	/*
 	createParticles("Blue", 325, MYColors::Blue);
 	createParticles("Green", 325, MYColors::Green);
@@ -60,7 +64,7 @@ void Game::createInitParticles()
 	*/
 }
 
-void Game::createParticles(int amount, game::MYColors color)
+void Game::createParticles(int amount)
 {
 	for (int i = 0; i < amount; i++)
 	{
@@ -73,8 +77,8 @@ void Game::createParticles(int amount, game::MYColors color)
 
 void Game::randPosition(Object& obj)
 {
-	obj.pos.x = rand() / (double(RAND_MAX) / 2) - 1;
-	obj.pos.y = rand() / (double(RAND_MAX) / 2) - 1;
+	obj.pos.x = rand() % 960;
+	obj.pos.y = rand() % 540;
 }
 
 }
